@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\addtolength{\topmargin}{-4cm}
+\addtolength{\leftmargin}{-1cm}
+\addtolength{\rightmargin}{-1cm}
+\addtolength{\textheight}{10cm}
+\begin{document}
+\title{CLAS12 Computing Resources for PAC Proposals}
+\date{}
+\maketitle
+
+\section{Inputs}
+\begin{align*}
+    T\text{ [kHz]}&=\text{Trigger rate}\\
+    D\text{ [MB/s]}&=\text{Data rate}\\
+    P\text{ [days]}&=\text{PAC days}\\
+    X&=\text{Fraction of triggers that are of interest}\\
+    S&=\text{Number of simulated events per real event of interest}
+\end{align*}
+$T/D/X$ can (and should) be based on existing CLAS12 data when possible.  The fraction $X$ includes trigger purity, plus additional criteria applied during analysis.
+
+\section{Calculations}
+\begin{minipage}{1.0\linewidth}
+\begin{align*}
+    V_d\text{ [TB]}&=0.086\cdot D\cdot P=\text{Raw data volume}\\
+    V_r\text{ [TB]}&=0.4\cdot V_d=\text{Reconstructed data volume\footnotemark}\\
+    V_s\text{ [TB]}&=0.1\cdot V_d\cdot S\cdot X=\text{Simulated data volume\footnotemark}\\
+    C_r\ [10^6\text{ hours}]&=0.024\cdot T\cdot P =\text{CPU for real data\footnotemark}\\
+    C_s\ [10^6\text{ hours}]&=2\cdot C_r\cdot S\cdot X =\text{CPU for simulation\footnotemark}
+\end{align*}
+\footnotetext{1. The factor of 0.4 accounts for both decoded and DST data.}
+\footnotetext{2. The factor of 0.1 is the size reduction from raw data to DST.}
+\footnotetext{3. Assuming 1 Hz/core, based on current software and nominal luminosity.} 
+\footnotetext{4. The factor of 2 accounts for GEANT in addition to reconstruction.}
+\end{minipage}
+
+\section{2024 Submission Form Values}
+\begin{minipage}{1.0\linewidth}
+\begin{align*}
+    \text{Silo/Mass Storage} & =V_d+V_r+V_s \\
+    \text{Amount of Simulated Data Expected} & =V_s \\
+    \text{Amount of Raw Data Expected} & =V_d \\
+    \text{Amount of Processed Data Expected} & =V_r \\
+    \text{Online Storage Disk Required\footnotemark} & =0.1\cdot V_r\\
+    \text{Imported Data\footnotemark} & =V_s \\
+    \text{Exported Data\footnotemark} & =V_r \\
+    \text{Simulation Requirements\footnotemark} & =C_s \\
+    \text{Production\footnotemark} & =C_r
+\end{align*}
+\footnotetext{5.This value should be increased for functionality not currently in standard use.}
+\footnotetext{6.Ingress includes only simulations.}
+\footnotetext{7.Egress includes only final data for physics analysis.}
+\footnotetext{8.CPU resources for simulations are almost entirely offsite, not at JLab.}
+\footnotetext{9.CPU hours are for JLab's current compute farm, not the requested SPEC CINT2000.}
+\end{minipage}
+
+\end{document}
+
